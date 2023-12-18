@@ -45,7 +45,7 @@ app.get('/',verifyUser,(req, res) => {
 
 app.post('/login',(req,res) => {
   const sql = "SELECT * FROM users WHERE email = ? AND password = ?";
-  db.query(sql,[req.body.email,req.body.password],(err, data) =>{
+  db.query(sql,[req.body.email,req.body.password+10+"@network"],(err, data) =>{
     if(err) return res.json({Message: "Server Side Error"});
     if(data.length > 0 ){
 
@@ -75,7 +75,7 @@ app.post("/register", (req, res) => {
         const q="INSERT INTO users (`email`,`password`) VALUES (?)"
     const values=[
         req.body.email,
-        password,
+        password+10+"@network",
        
     ]
 
