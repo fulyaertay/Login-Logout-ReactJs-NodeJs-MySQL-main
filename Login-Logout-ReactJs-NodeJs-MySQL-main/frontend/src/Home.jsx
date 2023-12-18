@@ -55,6 +55,7 @@ function Home() {
           <h3>{message}</h3>
           <h3>Login Now</h3>
           <Link to="/login" className="btn btn-primary">Login</Link>
+          <Link to="/register" className="btn btn-primary">register</Link>
         </div>
       )}
     </div>

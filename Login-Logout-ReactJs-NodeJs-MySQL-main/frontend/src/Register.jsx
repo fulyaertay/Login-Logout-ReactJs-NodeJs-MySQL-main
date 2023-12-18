@@ -1,66 +1,52 @@
-import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import axios from "axios";
-
-export const Register = () => {
-  const navigate = useNavigate();
-
-  const [register, setRegister] = useState({
+import React, { useState } from "react";
+import axios from 'axios'
+import { useNavigate } from "react-router-dom";
 
 
-    password: "",
-    username: ""
-  });
+ function Register() {
 
-  const [err, SetErr] = useState(null);
+  const[values, setValues] = useState({
+    email:'',
+    password:''
+  })
 
-  const handleInputChange = (e) => {
-    setRegister((prev) => ({ ...prev, [e.target.name]: e.target.value }));
-  };
+  const navigate = useNavigate()
 
-  const handleSubmit = async (e) => {
+  axios.defaults.withCredentials = true;
+  const handleSubmit = (e) => {
     e.preventDefault();
-    try {
-      await axios.post("http://localhost:8080/register", register);
-      navigate("/");
-    } catch (error) {
-      SetErr(error.response.data);
-      console.log(error);
-    }
-  };
+    axios.post('http://localhost:8080/register', values)
+    .then(res => {
+      if(res.data.Status === "Success"){
+        navigate('/')
+      }else {
+        alert("email var")
+      }
+    })
+    .catch(err => console.log(err));
+    
+
+  }
 
   return (
-    <div className="register-wrapper">
-      <div className="register">
-        <div className="filter-div"></div>
-        <form className="register-form" onSubmit={handleSubmit}>
-          <h1>Register</h1>
-          <input
-            type="text"
-            name="username"
-            id="username"
-            className="username-input"
-            placeholder="Username"
-            onChange={handleInputChange}
-            required
-          />
-     
-          <input
-            type="password"
-            name="password"
-            id="password"
-            className="password-input"
-            placeholder="Password"
-            onChange={handleInputChange}
-            required
-          />
-          <button type="submit" className="standart-btn">
-            Register
-          </button>
-          <Link to={"/login"}>go to login page</Link>
-          {err && <p className="error-message">{err}</p>}
-        </form>
+    <div className="d-flex justify-content-center align-items-center bg-primary vh-100">
+      <div className="bg-white p-3 rounded w-50">
+        <h2>Sign-up</h2>
+      <form onSubmit={handleSubmit}>
+        <div className="mb-3">
+        <label htmlFor="email"><strong>Email</strong></label>
+        <input type="email" placeholder="Enter Email" name="email" autoComplete="off" onChange={e => setValues({...values, email: e.target.value})} className="form-control rounded-0"></input>
+        </div>
+        <div className="mb-3">
+        <label htmlFor="password"><strong>Password</strong></label>
+        <input type="password" placeholder="Enter Password" name="password" autoComplete="off" onChange={e=> setValues({...values,password:e.target.value})} className="form-control rounded-0"></input>
+        </div>
+        <button type="submit" className="btn btn-success w-100 rounded-0">Register</button>
+        
+      </form>
       </div>
+
     </div>
   );
-};
+}
+export default Register;
