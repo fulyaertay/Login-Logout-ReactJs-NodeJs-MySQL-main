@@ -32,7 +32,7 @@ const verifyUser = (req, res, next) => {
       if(err){
         return res.json({Message: "Authentication Error. "})
       }else{
-        req.name = decoded.name;
+        req.email = decoded.email;
         next();
       }
     })
@@ -40,7 +40,7 @@ const verifyUser = (req, res, next) => {
 }
 
 app.get('/',verifyUser,(req, res) => {
- return res.json({Status: "Success", name: req.name})
+ return res.json({Status: "Success", name: req.email})
 })
 
 app.post('/login',(req,res) => {
@@ -52,7 +52,7 @@ app.post('/login',(req,res) => {
       const name  = data[0].name;
       const token =jwt.sign({name},"our-jsonwebtoken-secret-key", {expiresIn: '1d'});
       res.cookie('token',token);
-      return res.json({Status: "Success"})
+      return res.json({Status: "Success", email:"token"})
 
     }else{
       return res.json({Message:"No Records existed"})

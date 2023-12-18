@@ -19,7 +19,7 @@ function Home() {
       // console.log('check api',res)
       if(res.data.Status === "Success"){
         setAuth(true);
-        setName(res.data.name);
+        setName(res.data.email);
        
 
 
@@ -47,7 +47,7 @@ function Home() {
     <div className="container mt-4">
       {auth ? (
         <div>
-          <h3>You are Authorized {"admin"}</h3>
+          <h3>You are Authorized {"admin"}{name}</h3>
           <button className="btn btn-danger" onClick={handleLogout}>Logout</button>
         </div>
       ) : (
