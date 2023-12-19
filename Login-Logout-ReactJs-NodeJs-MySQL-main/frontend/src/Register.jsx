@@ -18,7 +18,7 @@ import { useNavigate } from "react-router-dom";
     axios.post('http://localhost:8080/register', values)
     .then(res => {
       if(res.data.Status === "Success"){
-        navigate('/')
+        navigate('/',{state:{email:values.email}})
       }else {
         alert("email var")
       }
