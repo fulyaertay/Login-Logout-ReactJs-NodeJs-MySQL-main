@@ -1,6 +1,6 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom"; 
+import { Link,useLocation } from "react-router-dom"; 
 
 
 
@@ -11,7 +11,7 @@ function Home() {
   const [name,setName] = useState('')
   const [message, setMessage] = useState('')
 
-
+  const location = useLocation();
   axios.defaults.withCredentials = true;
   useEffect(() => {
     axios.get('http://localhost:8080')
@@ -47,7 +47,7 @@ function Home() {
     <div className="container mt-4">
       {auth ? (
         <div>
-          <h3>You are Authorized {"admin"}{name}</h3>
+          <h3>You are Authorized {"admin"}{location.state.email}</h3>
           <button className="btn btn-danger" onClick={handleLogout}>Logout</button>
         </div>
       ) : (

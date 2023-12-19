@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import axios from 'axios'
 import { useNavigate } from "react-router-dom";
-
+import Home from "./Home"
 
  function Login() {
 
@@ -18,7 +18,7 @@ import { useNavigate } from "react-router-dom";
     axios.post('http://localhost:8080/login', values)
     .then(res => {
       if(res.data.Status === "Success"){
-        navigate('/')
+        navigate('/',{state:{email:values.email}})
       }else {
         alert(res.data.Message)
       }
